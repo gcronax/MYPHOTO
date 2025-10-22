@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -53,36 +54,35 @@ data class imgenes(
 
     val direccion: String
 )
-var imagenmuestra: String =""
 @Composable
 fun Greeting( modifier: Modifier = Modifier) {
 
+    var imagenselect by remember { mutableStateOf<imgenes?>(null)}
     val imagenSeleccionada by remember {
         mutableStateOf(listOf(
             imgenes(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
             ),
             imgenes(
-                "https://img.freepik.com/foto-gratis/disparo-enfoque-selectivo-garceta-ganadera_181624-44861.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
-
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
             ),
             imgenes(
-                "https://img.freepik.com/fotos-premium/fotografia-animal_27525-5846.jpg"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
             ),
             imgenes(
-                "https://img.freepik.com/foto-gratis/cisne-cygnus-olor-adulto-cerca-hermoso-cisne-blanco_1153-8559.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
             ),
             imgenes(
-                "https://img.freepik.com/fotos-premium/hermosos-dos-cisnes-jovenes-bano-manana_52720-736.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
             ),
             imgenes(
-                "https://img.freepik.com/fotos-premium/fotografia-animal_27525-5846.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
             ),
             imgenes(
-                "https://img.freepik.com/fotos-premium/garceta-ganadera-o-conocido-como-ibis-bubulcus-pie-firmemente-cerca-plantas-insectos-plagas_7954-2268.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
             ),
             imgenes(
-                "https://img.freepik.com/foto-gratis/primer-plano-ganso-gris-muelle_181624-40060.jpg?ga=GA1.1.433433568.1761142123&semt=ais_hybrid&w=740&q=80"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
             )
         ))
     }
@@ -90,42 +90,40 @@ fun Greeting( modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ){
-        LazyRow(
-
-        ) {
-            items(imagenSeleccionada.size) { index ->
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(imagenSeleccionada[index].direccion)
-                        .build(),
-                    contentDescription = "Imagen",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(250.dp).padding(1.dp)
-                        .clickable(onClick = {
-                            imagenmuestra=imagenSeleccionada[index].direccion
-                        }
-                        )
-                )
-
-
-            }
+        lazy(imagenSeleccionada,{it->imagenselect=it})
+        imagenselect?.let {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(it.direccion)
+                    .build(),
+                contentDescription = "Imagen",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.size(250.dp).padding(1.dp)
+            )
         }
-        Text(imagenmuestra)
 
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imagenmuestra)
-                .build(),
-            contentDescription = "Imagen",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.size(250.dp)
-                .padding(1.dp)
-
-        )
 
 
     }
+}
+@Composable
+fun lazy(imagenSeleccionada: List<imgenes>, onImageSelected: (imgenes) -> Unit){
+    LazyRow {
+        items(imagenSeleccionada.size) { index ->
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imagenSeleccionada[index].direccion)
+                    .build(),
+                contentDescription = "Imagen",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.size(250.dp).padding(1.dp)
+                    .clickable(onClick = {
+                        onImageSelected(imagenSeleccionada[index])
+                    }
+                    )
+            )
 
 
-
+        }
+    }
 }
