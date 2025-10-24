@@ -52,7 +52,9 @@ class MainActivity : ComponentActivity() {
 
 data class imgenes(
 
-    val direccion: String
+    val direccion: String,
+    val nombre: String
+
 )
 @Composable
 fun Greeting( modifier: Modifier = Modifier) {
@@ -61,28 +63,20 @@ fun Greeting( modifier: Modifier = Modifier) {
     val imagenSeleccionada by remember {
         mutableStateOf(listOf(
             imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s",
+                "cerdo"
             ),
             imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s",
+                "conejo"
             ),
             imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s",
+                "cerdo"
             ),
             imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
-            ),
-            imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
-            ),
-            imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
-            ),
-            imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiT8XXmitwpb7dUo1lNHDpqB1z9jlbr-LatA&s"
-            ),
-            imgenes(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3HTgKkm-tBcNbiLG5eCL12nOngY_fEta2BA&s",
+                "conejo"
             )
         ))
     }
